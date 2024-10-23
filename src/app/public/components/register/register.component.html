@@ -1,0 +1,29 @@
+<div>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <app-custom-input
+      label="Email"
+      [control]="$any(registerForm.get('email'))"
+      placeholder="Enter your email"
+      type="email"
+      errorMessage="Please enter a valid email"
+    ></app-custom-input>
+
+    <app-custom-input
+      label="Password"
+      [control]="$any(registerForm.get('password'))"
+      placeholder="Enter your password"
+      type="password"
+      errorMessage="Please enter a valid password"
+    ></app-custom-input>
+
+    <app-custom-input
+      label="Confirm Password"
+      [control]="$any(registerForm.get('confirmPassword'))"
+      placeholder="Confirm your password"
+      type="password"
+      errorMessage="Please enter a valid Confirm Password"
+    ></app-custom-input>
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  </form>
+</div>
