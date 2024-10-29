@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export enum LocalKeys {
-  token = 'token'
+  accessToken = 'token',
+  refreshToken = 'refresh-token',
 }
 
 @Injectable({

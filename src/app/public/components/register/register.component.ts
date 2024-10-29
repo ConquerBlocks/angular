@@ -1,8 +1,8 @@
-import { appRoutes } from '@/app/app.routes';
-import { CustomInputComponent } from '@/app/components';
-import { AuthService } from '@/app/services';
-import { passwordMatchValidator } from '@/app/validators';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { appRoutes } from '@/app.routes';
+import { CustomInputComponent } from '@/components';
+import { AuthService, LocalManagerService } from '@/services';
+import { passwordMatchValidator } from '@/validators/password-match.validator';
+import { afterNextRender, ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -22,38 +22,48 @@ interface RegisterForm {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent {
-  authService = inject(AuthService);
-  router = inject(Router);
+  authService = inject(AuthService)
+  localManager = inject(LocalManagerService)
+  route = inject(Router)
 
-  registerForm = new FormGroup<RegisterForm>(
-    {
-      email: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required, Validators.email]
-      }),
-      password: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      confirmPassword: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-    },
+  registerForm = new FormGroup<RegisterForm>({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.email, Validators.required]
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
+    confirmPassword: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
+  },
     { validators: passwordMatchValidator }
   )
 
-  async onSubmit(): Promise<void> {
+  constructor() {
+    afterNextRender(() => {
+      this.localManager.clearStorage()
+    })
+  }
+
+  async onSubmit() {
     if (this.registerForm.valid) {
       try {
-        await firstValueFrom(this.authService.register(this.registerForm.getRawValue()))
+        const toSend = {
+          email: this.registerForm.getRawValue().email,
+          password: this.registerForm.getRawValue().password
+        }
 
-        this.router.navigate([appRoutes.public.login])
-      } catch (err) {
-        console.error(`can't register`, err)
+        await firstValueFrom(this.authService.register(toSend));
+        this.route.navigate([appRoutes.public.login], { replaceUrl: true });
+      } catch (error) {
+        console.error(error)
       }
 
-      this.registerForm.reset();
+      this.registerForm.reset()
     }
   }
 }
