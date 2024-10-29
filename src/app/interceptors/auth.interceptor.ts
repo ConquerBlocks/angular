@@ -1,11 +1,15 @@
 import { LocalManagerService, AuthService, LocalKeys } from "@/services";
+import { isPlatformServer } from "@angular/common";
 import { HttpInterceptorFn, HttpErrorResponse } from "@angular/common/http";
-import { inject } from "@angular/core";
+import { inject, PLATFORM_ID } from "@angular/core";
 import { catchError, switchMap, throwError } from "rxjs";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const localManager = inject(LocalManagerService);
   const authService = inject(AuthService);
+  const platformId = inject(PLATFORM_ID);
+
+  if (isPlatformServer(platformId)) { return next(req) }
 
   const token = localManager.getElement(LocalKeys.accessToken);
 
