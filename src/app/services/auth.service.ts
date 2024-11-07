@@ -45,6 +45,7 @@ export class AuthService {
           this.localManager.setElement(LocalKeys.accessToken, newAccessToken);
         }),
         catchError((error) => {
+          console.error('Error refreshing token', error);
           this.logout();
           return throwError(() => error);
         })

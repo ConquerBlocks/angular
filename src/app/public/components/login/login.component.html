@@ -2,7 +2,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <app-custom-input
       label="Email"
-      [control]="$any(loginForm.get('email'))"
+      [control]="loginForm.get('email')"
       placeholder="Enter your email"
       type="email"
       errorMessage="Please enter a valid email"
@@ -10,7 +10,7 @@
 
     <app-custom-input
       label="Password"
-      [control]="$any(loginForm.get('password'))"
+      [control]="loginForm.get('password')"
       placeholder="Enter your password"
       type="password"
       errorMessage="Please enter a valid password"

@@ -1,0 +1,14 @@
+<div>
+  <label>{{label()}}</label>
+
+  <select [formControl]="$any(control())">
+    @for(option of options(); track option) {
+      <option [value]="option">{{option}}</option>
+    }
+  </select>
+
+  @if( control() && control()!.invalid && control()!.touched) {
+    <small>{{errorMessage()}}</small>
+  }
+</div>
+

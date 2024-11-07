@@ -11,16 +11,7 @@ import { CharacterListComponent } from './components';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CharactersComponent {
-  private charactersService = inject(CharacterService)
+  private readonly charactersService = inject(CharacterService)
 
-  characters = computed(() => Array.from(this.charactersService.state().characters).map(element => {
-    const [, character] = element
-
-    return character
-  }))
-
-
-  constructor() {
-    this.charactersService.getCharacters();
-  }
+  protected characters = computed(() => this.charactersService.getFormattedCharacters())
 }

@@ -2,17 +2,16 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-custom-input',
+  selector: 'app-custom-select',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl: './custom-input.component.html',
-  styleUrl: './custom-input.component.scss',
+  templateUrl: './custom-select.component.html',
+  styleUrl: './custom-select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CustomInputComponent {
+export class CustomSelectComponent {
   control = input.required<AbstractControl<string, string> | null>();
   label = input.required<string>();
-  type = input.required<string>();
-  placeholder = input.required<string>();
+  options = input.required<string[]>();
   errorMessage = input.required<string>();
 }

@@ -5,7 +5,7 @@ import { passwordMatchValidator } from '@/validators/password-match.validator';
 import { afterNextRender, ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, VirtualAction } from 'rxjs';
 
 interface RegisterForm {
   email: FormControl<string>;
@@ -33,11 +33,11 @@ export class RegisterComponent {
     }),
     password: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required]
+      validators: [Validators.required, Validators.minLength(6)]
     }),
     confirmPassword: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required]
+      validators: [Validators.required, Validators.minLength(6)]
     }),
   },
     { validators: passwordMatchValidator }

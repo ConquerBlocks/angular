@@ -3,8 +3,7 @@
   <p>No Characters Found</p>
 } @else {
   @for (character of characterList; track character.id) {
-    <b>{{character.name}}</b>
-    <p>{{character.status}}</p>
+    <app-character-details [character]="character"/>
   }
 }
 

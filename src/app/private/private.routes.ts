@@ -17,6 +17,20 @@ export const routes: Routes = [
             (m) => m.CharactersComponent,
           ),
       },
+      {
+        path: appRoutes.private.new_character,
+        loadComponent: () =>
+          import('./characters/components/character-add-edit/character-add-edit.component').then(
+            (m) => m.CharacterAddEditComponent,
+          ),
+      },
+      {
+        path: `${appRoutes.private.characters}/:id`,
+        loadComponent: () =>
+          import('./characters/components/character-add-edit/character-add-edit.component').then(
+            (m) => m.CharacterAddEditComponent,
+          ),
+      }
     ],
   },
 ];

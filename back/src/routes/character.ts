@@ -22,6 +22,7 @@ characterRouter.use(authenticateToken);
 
 // Esquema de validación para personajes
 const characterSchema = Joi.object({
+  id: Joi.number().integer(),
   name: Joi.string().required(),
   status: Joi.string().valid("Alive", "Dead", "unknown").required(),
   species: Joi.string().required(),
@@ -94,10 +95,10 @@ characterRouter.post(
   ),
 );
 
-// Actualizar un personaje existente (solo 'admin')
+// Actualizar un personaje existente
 characterRouter.put(
   "/:id",
-  authorizeRoles("admin"),
+  authorizeRoles("admin", "user"),
   asyncHandler(
     async (req: AuthenticatedRequest, res: ExpressResponse): Promise<void> => {
       const id = parseInt(req.params.id, 10);
@@ -119,10 +120,10 @@ characterRouter.put(
   ),
 );
 
-// Eliminar un personaje (solo 'admin')
+// Eliminar un personaje
 characterRouter.delete(
   "/:id",
-  authorizeRoles("admin"),
+  authorizeRoles("admin", "user"),
   asyncHandler(
     async (req: AuthenticatedRequest, res: ExpressResponse): Promise<void> => {
       const id = parseInt(req.params.id, 10);

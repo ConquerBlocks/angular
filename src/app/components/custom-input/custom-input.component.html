@@ -1,13 +1,15 @@
 <div>
+  @let controlLocal = control();
+
   <label>{{label()}}</label>
 
   <input
-    [formControl]="control()"
+    [formControl]="$any(controlLocal)"
     [type]="type()"
     [attr.placeholder]="placeholder()"
   />
 
-  @if (control().invalid && control().touched) {
+  @if (controlLocal !== null && controlLocal.invalid && controlLocal.touched) {
    <small class="error">{{ errorMessage() }}</small>
   }
 </div>

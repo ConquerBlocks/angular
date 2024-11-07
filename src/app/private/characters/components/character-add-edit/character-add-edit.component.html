@@ -1,0 +1,20 @@
+<div>
+  <form [formGroup]="characterForm()" (ngSubmit)="onSubmit()">
+    <app-custom-input
+      [control]="characterForm().get('name')"
+      label='Name'
+      placeholder= "Enter Name"
+      type="text"
+      errorMessage="Name is required"/>
+
+    <app-custom-select
+      [control]="characterForm().get('status')"
+      label='Status'
+      placeholder= "Select Status"
+      type="text"
+      [options]="options"
+      errorMessage="Status is required"/>
+
+    <button type="submit" [disabled]="characterForm().invalid">{{id() ? "Edit" : "Save"}}</button>
+  </form>
+</div>

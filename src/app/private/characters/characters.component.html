@@ -1,11 +1,3 @@
 @let characterList = characters();
 
-@if (characterList === undefined || characterList?.length === 0) {
-  <p>No Characters Found</p>
-} @else {
-  @for (character of characterList; track character.id) {
-    <b>{{character.name}}</b>
-    <p>{{character.status}}</p>
-  }
-}
-
+<app-character-list [characters]="characterList"/>

@@ -14,6 +14,14 @@ export class CharacterService {
   baseUrl = "http://localhost:4000/characters";
   http = inject(HttpClient)
 
+  constructor() {
+    this.getCharacters();
+  }
+
+  getFormattedCharacters() {
+    return Array.from(this.state().characters.values())
+  }
+
   getCharacters() {
     this.http
       .get<Character[]>(this.baseUrl)
